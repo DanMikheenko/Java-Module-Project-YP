@@ -3,7 +3,26 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         int visitorCount = getVisitorCount();
-
+        Calculator calculator = calculateGoods(visitorCount);
+    }
+    //:todo Поменять язык вывода сообщений на русский
+    private static int getVisitorCount(){
+        int visitorCount;
+        while (true){
+            System.out.println("How many people have to pay the check?");
+            Scanner scanner = new Scanner(System.in);
+            visitorCount = scanner.nextInt();
+            if (visitorCount == 1){
+                System.out.println("It makes no sense to use the program for 1 person");
+            } else if (visitorCount < 1) {
+                System.out.println("You typed incorrect value!");
+            } else {
+                break;
+            }
+        }
+        return visitorCount;
+    }
+    private static Calculator calculateGoods(int visitorCount){
         Calculator calculator = new Calculator();
         while (true){
             Scanner scanner = new Scanner(System.in);
@@ -20,27 +39,7 @@ public class Main {
         }
         calculator.showOrder();
         double sumToPayPerPerson = calculator.getOrderSum()/visitorCount;
-        System.out.println("Everyone has to pay: " + String.format("%.2f", sumToPayPerPerson));
-
-
-
-
-    }
-
-    private static int getVisitorCount(){
-        int visitorCount;
-        while (true){
-            System.out.println("How many people have to pay the check?");
-            Scanner scanner = new Scanner(System.in);
-            visitorCount = scanner.nextInt();
-            if (visitorCount == 1){
-                System.out.println("It makes no sense to use the program for 1 person");
-            } else if (visitorCount < 1) {
-                System.out.println("You typed incorrect value!");
-            } else {
-                break;
-            }
-        }
-        return visitorCount;
+        System.out.println("Everyone has to pay: " + String.format("%.2f", sumToPayPerPerson));//:todo Добавить спряжение в зависимости от суммы
+        return calculator;
     }
 }

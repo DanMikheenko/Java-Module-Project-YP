@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class Calculator {
-    double orderSum;
+    private double orderSum;
     private final HashMap<Good, Integer> order = new HashMap<>();
     public void addGood (Good good, int quantity){
         if(order.containsKey(good)){
