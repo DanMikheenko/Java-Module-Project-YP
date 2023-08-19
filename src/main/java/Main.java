@@ -6,11 +6,14 @@ public class Main {
         Calculator calculator = calculateGoods(visitorCount);
     }
     private static int getVisitorCount(){
-        int visitorCount;
+        int visitorCount = 0;
         while (true){
             System.out.println("На какое количество людей разделить чек?");
             Scanner scanner = new Scanner(System.in);
-            visitorCount = scanner.nextInt();
+            String visitorCountString = scanner.next();
+            if (isInt(visitorCountString)){
+                visitorCount = Integer.parseInt(visitorCountString);
+            }
             if (visitorCount == 1){
                 System.out.println("Нет смысла использовать программу для 1-го человека");
             } else if (visitorCount < 1) {
@@ -31,14 +34,42 @@ public class Main {
                 break;
             }
             System.out.println("Пожалуйста введите цену товара");
-            double goodPrice = scanner.nextDouble();
-            Good good = new Good(goodName, goodPrice);
-            calculator.addGood(good, 1);
-            System.out.println("Товар был успешно добавлен");
+            double goodPrice;
+            String goodPriceString = scanner.next();
+            if (isDouble(goodPriceString)){
+                goodPrice = Double.parseDouble(goodPriceString);
+                if (goodPrice<0){
+                    System.out.println("Цена товара не может быть отрицательной");
+                }
+                else {
+                    Good good = new Good(goodName, goodPrice);
+                    calculator.addGood(good, 1);
+                    System.out.println("Товар был успешно добавлен");
+                }
+            }else {
+                System.out.println("Вы ввели некорректное значение цены");
+            }
         }
         calculator.showOrder();
         double sumToPayPerPerson = calculator.getOrderSum()/visitorCount;
         System.out.println("Каждый должен заплатить: " + String.format("%.2f", sumToPayPerPerson) + " " + calculator.getRubleInRightFormat(sumToPayPerPerson));
         return calculator;
+    }
+    private static boolean isInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
