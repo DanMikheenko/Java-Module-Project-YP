@@ -26,12 +26,24 @@ public class Calculator {
         return sum;
     }
     public void showOrder(){
-        System.out.println("Added goods:");
+        System.out.println("Добавленные товары:");
         for (Good good: order.keySet()) {
             System.out.println(good.name + " " + String.format("%.2f", good.price));
         }
     }
     public double getOrderSum(){
         return orderSum;
+    }
+
+    public String getRubleInRightFormat(double rubles) {
+
+        int lastDigit = (int)(Math.floor(rubles) % 10);
+
+        return switch (lastDigit) {
+            case 1 -> "рубль";
+            case 2, 3, 4 -> "рубля";
+            default -> "рублей";
+        };
+
     }
 }

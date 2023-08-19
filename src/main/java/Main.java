@@ -5,17 +5,16 @@ public class Main {
         int visitorCount = getVisitorCount();
         Calculator calculator = calculateGoods(visitorCount);
     }
-    //:todo Поменять язык вывода сообщений на русский
     private static int getVisitorCount(){
         int visitorCount;
         while (true){
-            System.out.println("How many people have to pay the check?");
+            System.out.println("На какое количество людей разделить чек?");
             Scanner scanner = new Scanner(System.in);
             visitorCount = scanner.nextInt();
             if (visitorCount == 1){
-                System.out.println("It makes no sense to use the program for 1 person");
+                System.out.println("Нет смысла использовать программу для 1-го человека");
             } else if (visitorCount < 1) {
-                System.out.println("You typed incorrect value!");
+                System.out.println("Вы ввели некорректное значение");
             } else {
                 break;
             }
@@ -26,20 +25,20 @@ public class Main {
         Calculator calculator = new Calculator();
         while (true){
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Please, type the name of a good or type 'complete' to finish the calculating");
+            System.out.println("Пожалуйста, введите название товара или команду 'завершить' чтобы закончить расчет");
             String goodName = scanner.nextLine();
-            if (goodName.equalsIgnoreCase("complete") ){
+            if (goodName.equalsIgnoreCase("завершить") ){
                 break;
             }
-            System.out.println("Please, type the price of the good");
+            System.out.println("Пожалуйста введите цену товара");
             double goodPrice = scanner.nextDouble();
             Good good = new Good(goodName, goodPrice);
             calculator.addGood(good, 1);
-            System.out.println("The good has been successfully added to the calculator");
+            System.out.println("Товар был успешно добавлен");
         }
         calculator.showOrder();
         double sumToPayPerPerson = calculator.getOrderSum()/visitorCount;
-        System.out.println("Everyone has to pay: " + String.format("%.2f", sumToPayPerPerson));//:todo Добавить спряжение в зависимости от суммы
+        System.out.println("Каждый должен заплатить: " + String.format("%.2f", sumToPayPerPerson) + " " + calculator.getRubleInRightFormat(sumToPayPerPerson));
         return calculator;
     }
 }
