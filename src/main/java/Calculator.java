@@ -39,11 +39,16 @@ public class Calculator {
 
         int lastDigit = (int)(Math.floor(rubles) % 10);
 
-        return switch (lastDigit) {
-            case 1 -> "рубль";
-            case 2, 3, 4 -> "рубля";
-            default -> "рублей";
-        };
+        switch (lastDigit) {
+            case 1:
+                return "рубль";
+            case 2:
+            case 3:
+            case 4:
+                return "рубля";
+            default:
+                return "рублей";
+        }
 
     }
 }
