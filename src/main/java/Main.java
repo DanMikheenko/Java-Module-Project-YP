@@ -7,14 +7,12 @@ public class Main {
     }
 
     private static int getVisitorCount() {
-        int visitorCount = 0;
+        int visitorCount;
         while (true) {
             System.out.println("На какое количество людей разделить чек?");
             Scanner scanner = new Scanner(System.in);
             String visitorCountString = scanner.next();
-            if (isInt(visitorCountString)) {
-                visitorCount = Integer.parseInt(visitorCountString);
-            }
+            visitorCount = parseStringIntoInt(visitorCountString);
             if (visitorCount == 1) {
                 System.out.println("Нет смысла использовать программу для 1-го человека");
             } else if (visitorCount < 1) {
@@ -26,7 +24,7 @@ public class Main {
         return visitorCount;
     }
 
-    private static Calculator calculateGoods(int visitorCount) {
+    private static void calculateGoods(int visitorCount) {
         Calculator calculator = new Calculator();
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -38,40 +36,37 @@ public class Main {
             System.out.println("Пожалуйста введите цену товара");
             double goodPrice;
             String goodPriceString = scanner.next();
-            if (isDouble(goodPriceString)) {
-                goodPrice = Double.parseDouble(goodPriceString);
-                if (goodPrice < 0) {
-                    System.out.println("Цена товара не может быть отрицательной");
-                } else {
-                    Good good = new Good(goodName, goodPrice);
-                    calculator.addGood(good, 1);
-                    System.out.println("Товар был успешно добавлен");
-                }
+
+            goodPrice = parseStringIntoDouble(goodPriceString);
+
+            if (goodPrice < 0) {
+                System.out.println("Вы ввели некорректное значение");
             } else {
-                System.out.println("Вы ввели некорректное значение цены");
+                Good good = new Good(goodName, goodPrice);
+                calculator.addGood(good, 1);
+                System.out.println("Товар был успешно добавлен");
             }
         }
+
         calculator.showOrder();
         double sumToPayPerPerson = calculator.getOrderSum() / visitorCount;
         System.out.println("Каждый должен заплатить: " + String.format("%.2f", sumToPayPerPerson) + " " + calculator.getRubleInRightFormat(sumToPayPerPerson));
-        return calculator;
     }
 
-    private static boolean isInt(String s) {
+
+    private static int parseStringIntoInt(String string) {
         try {
-            Integer.parseInt(s);
-            return true;
+            return Integer.parseInt(string);
         } catch (NumberFormatException e) {
-            return false;
+            return -1;
         }
     }
 
-    private static boolean isDouble(String s) {
+    private static double parseStringIntoDouble(String string) {
         try {
-            Double.parseDouble(s);
-            return true;
+            return Double.parseDouble(string);
         } catch (NumberFormatException e) {
-            return false;
+            return -1;
         }
     }
 }

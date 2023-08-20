@@ -41,7 +41,8 @@ public class Calculator {
     public String getRubleInRightFormat(double rubles) {
 
         int lastDigit = (int) (Math.floor(rubles) % 10);
-
+        if (((int) (Math.floor(rubles) % 100))<=19 && ((int) (Math.floor(rubles) % 100))>=11)
+            return "рублей";
         switch (lastDigit) {
             case 1:
                 return "рубль";
